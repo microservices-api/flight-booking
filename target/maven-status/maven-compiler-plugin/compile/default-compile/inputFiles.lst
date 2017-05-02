@@ -1,0 +1,11 @@
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/resources/AirlinesResource.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/resources/BookingResource.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/model/Airline.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/model/CreditCard.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/model/Booking.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/app/JAXRSApp.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/DatabaseAccess.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/Controller.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/model/Flight.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/HttpHelper.java
+/Users/arthur/eclipse_workspaces/liberty_WDT/airlines/src/main/java/microservices/api/sample/resources/AvailabilityResource.java
