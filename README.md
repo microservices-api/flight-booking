@@ -5,7 +5,7 @@ git clone https://github.com/microservices-api/flight-booking.git
 ```
 ## Create a deployable WAR file
 ```
-cd airlines/airlines
+cd flight-booking
 mvn package
 ```
 The packaged WAR file will be at the following location: `flight-booking/deployment_artifacts/airlines.war`
