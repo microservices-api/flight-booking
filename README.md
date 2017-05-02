@@ -14,6 +14,7 @@ The packaged WAR file will be at the following location: `flight-booking/deploym
 * cd flight-booking/deployment_artifacts
 * docker build .
 * docker run &lt;image&gt;
+* open a browser and navigate to 'http://&lt;your_host&gt;/api/explorer' to see the OpenAPI UI
 
 ## Deploy locally in an application server (outside of a container)
 * download the application server (Liberty) jar from https://developer.ibm.com/wasdev/downloads/
@@ -22,8 +23,8 @@ The packaged WAR file will be at the following location: `flight-booking/deploym
 * copy the file `flight-booking/deployment_artifacts/airlines.war` into `wlp/usr/servers/myServer/apps`
 * install the needed features by running `wlp/bin installUtility install --acceptLicense myServer`
 * start the server by running `wlp/bin server start myServer`
-* open a browser and paste the URL `http://localhost:9080/ibm/api/explorer`, using the credentials `admin / admin` or a different set of credentials if you modified the registry in server.xml
-* you can then use the Open API UI to view and test the REST APIs of this application!
+* open a browser and navigate to 'http://&lt;your_host&gt;/api/explorer' to see the OpenAPI UI
+
 
 
 
