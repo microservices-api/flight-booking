@@ -1,0 +1,26 @@
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>webProfile-7.0</feature>
+        <feature>apiDiscovery-1.0</feature>
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+    
+    <keyStore id="defaultKeyStore" password="Liberty"/>
+  
+	<basicRegistry id="basic">
+		<user name="admin" password="admin"/>
+	</basicRegistry>
+
+<application id="myWebApp" location="${server.config.dir}/apps/airlines.war" name="airlines" type="war">
+   <application-bnd>
+       <security-role name="Administrator">
+           <user name="admin"/>
+       </security-role>
+   </application-bnd>
+</application>
+
+</server>
