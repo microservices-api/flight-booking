@@ -10,7 +10,7 @@ mvn package
 ```
 The packaged WAR file will be at the following location: `flight-booking/deployment_artifacts/airlines.war`
 
-## Deploy in an application server
+## Deploy locally in an application server
 For **Liberty**:
 * download the jar from https://developer.ibm.com/wasdev/downloads/
 * install apiDiscovery-1.0 by running `wlp/bin installUtility install apiDiscovery-1.0`
