@@ -13,7 +13,7 @@ The packaged WAR file will be at the following location: `flight-booking/deploym
 ## Deploy locally in a Docker container
 * cd flight-booking/deployment_artifacts
 * docker build .
-* docker run &lt;image&gt;
+* docker run -p 80:9080 -p 443:9443 -i &lt;image&gt;
 * open a browser and navigate to `http://<your_host>/api/explorer` to see the OpenAPI UI
 
 ## Deploy locally in an application server (outside of a container)
