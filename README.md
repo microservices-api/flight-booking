@@ -1,6 +1,6 @@
 # Getting started
 ## Setup database
-This application uses a local CouchDB database.  The database address comes from a configuration file, `https://github.com/microservices-api/flight-booking/tree/master/src/main/resources`, or at the WAR's `WEB-INF/classes/config.properties` file.  
+This application uses a local CouchDB database.  The database address comes from a configuration file, `https://github.com/microservices-api/flight-booking/tree/master/src/main/resources/config.properties`, or at the WAR's `WEB-INF/classes/config.properties` file.  
 
 We also assume the following databases have been created:  `airlines` and `bookings`.   You can pre-populate your `airlines` database with the following airlines (note: in the future we'll do a database init helper class so that you don't have to manually do this):
 
