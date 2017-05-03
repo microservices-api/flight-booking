@@ -1,6 +1,12 @@
 # Getting started
 ## Setup database
-This application uses a local CouchDB database, assumed to be at the default local address of `http://127.0.0.1:5984` with no credentials.
+This application uses a local CouchDB database, assumed to be at the default local address of `http://127.0.0.1:5984` with no credentials, and with the following databases created:  `airlines` and `bookings`.   You can pre-populate your `airlines` database with the following airlines (note: in the future we'll do a database init helper class so that you don't have to manually do this):
+
+```
+{"name":"Acme Air","contactPhone":"1-888-1234-567"}
+{"name":"Acme Air Partner","contactPhone":"1-855-1284-563"}
+{"name":"Mock Air","contactPhone":"1-855-4254-000"}
+```
 
 To setup CouchDB, please see http://couchdb.apache.org/
 
