@@ -11,9 +11,9 @@ mvn package
 The packaged WAR file will be at the following location: `flight-booking/deployment_artifacts/airlines.war`
 
 ## Deploy locally in a Docker container
-* cd flight-booking/deployment_artifacts
-* docker build .
-* docker run -p 80:9080 -p 443:9443 -i &lt;image&gt;
+* `cd flight-booking/deployment_artifacts`
+* `docker build .`
+* `docker run -p 80:9080 -p 443:9443 -i &lt;image&gt;`
 * open a browser and navigate to `http://<your_host>/api/explorer` to see the OpenAPI UI
 * if you want to use the API Connect integration endpoint, navigate to `http://<your_host>/ibm/api/explorer` and use the credentials defined in your server.xml (admin/admin)
 
