@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,12 +16,32 @@ import microservices.api.sample.model.Booking;
 
 public class DatabaseAccess {
 	
-	private static final String DATABASE_CORE_ADDRESS = "http://127.0.0.1:5984/";
-	private static final String AIRLINES_DATABASE = DATABASE_CORE_ADDRESS + "airlines";
-	private static final String BOOKINGS_DATABASE = DATABASE_CORE_ADDRESS + "bookings";
+	public static void main (String[] args) {
+		getAllAirlines();
+	}
+
+	
+	private static String DATABASE_CORE_ADDRESS;
+	private static String AIRLINES_DATABASE;
+	private static String BOOKINGS_DATABASE;
 	private static final String ALL_QUERY = "/_all_docs";
 	private static final ObjectMapper mapper = new ObjectMapper();
-		
+
+	
+	static {
+		Properties props = new Properties();
+		try {
+			props.load(DatabaseAccess.class.getClassLoader().getResourceAsStream("config.properties"));
+			DATABASE_CORE_ADDRESS = props.getProperty("database");
+			AIRLINES_DATABASE = DATABASE_CORE_ADDRESS + "airlines";
+			BOOKINGS_DATABASE = DATABASE_CORE_ADDRESS + "bookings";
+			System.out.println("loaded cconfig. Database: " + DATABASE_CORE_ADDRESS);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static Collection<Airline> getAllAirlines() {
 		JsonNode response = HttpHelper.connect(AIRLINES_DATABASE + ALL_QUERY, "GET", null);
 		if (response == null) {
@@ -34,7 +55,7 @@ public class DatabaseAccess {
 			try {
 				JsonNode airlineJson = HttpHelper.connect(AIRLINES_DATABASE + "/" + airlines.get(i).get("id").asText(), "GET", null);
 				Airline airline = mapper.treeToValue(airlineJson, Airline.class);
-				System.out.println("Airline[" + i + "] " + airline);
+				System.out.println("Airline[" + i + "] " + mapper.writeValueAsString(airline));
 				allAirlines.add(airline);
 			} catch (IOException e) {
 				e.printStackTrace();
