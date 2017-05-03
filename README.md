@@ -1,4 +1,9 @@
 # Getting started
+## Setup database
+This application uses a local CouchDB database, assumed to be at the default local address of `http://127.0.0.1:5984` with no credentials.
+
+To setup CouchDB, please see http://couchdb.apache.org/
+
 ## Clone application
 ```
 git clone https://github.com/microservices-api/flight-booking.git
