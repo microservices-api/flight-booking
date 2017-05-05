@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,6 +16,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import microservices.api.sample.model.Airline;
 import microservices.api.sample.model.Booking;
+import microservices.api.sample.model.Airport;
+import microservices.api.sample.model.Weather;
 
 public class DatabaseAccess {
 	
@@ -20,7 +25,11 @@ public class DatabaseAccess {
 		getAllAirlines();
 	}
 
-	
+	//Please add your Weather API's USERNAME and PASSWORD here.
+	private static String USERNAME = "username";
+	private static String PASSWORD = "password";
+
+
 	private static String DATABASE_CORE_ADDRESS;
 	private static String AIRLINES_DATABASE;
 	private static String BOOKINGS_DATABASE;
@@ -32,10 +41,10 @@ public class DatabaseAccess {
 		Properties props = new Properties();
 		try {
 			props.load(DatabaseAccess.class.getClassLoader().getResourceAsStream("config.properties"));
-			DATABASE_CORE_ADDRESS = props.getProperty("database");
+			DATABASE_CORE_ADDRESS = "http://couchdb:5984/";
 			AIRLINES_DATABASE = DATABASE_CORE_ADDRESS + "airlines";
 			BOOKINGS_DATABASE = DATABASE_CORE_ADDRESS + "bookings";
-			System.out.println("loaded cconfig. Database: " + DATABASE_CORE_ADDRESS);
+			System.out.println("loaded config. Database: " + DATABASE_CORE_ADDRESS);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,6 +71,41 @@ public class DatabaseAccess {
 			}
 		}
 		return allAirlines;
+	}
+
+	public static Weather getLocWeather(String date, String airportTo) {
+		HttpHelper.setAuth(USERNAME,PASSWORD);
+		HttpHelper.enableAuth(true);
+		JsonNode response = HttpHelper.connect("https://twcservice.mybluemix.net/api/weather/v3/location/point?iataCode="+ airportTo +"&language=en-US", "GET", null);
+		if (response == null) {
+			return null;
+		}
+		String city = response.path("location").path("city").asText();
+		double lat = response.path("location").path("latitude").asDouble();
+		String latitude = Double.toString(lat);
+		double lon = response.path("location").path("longitude").asDouble();
+		String longitude = Double.toString(lon);
+		JsonNode response2 = HttpHelper.connect("https://twcservice.mybluemix.net/api/weather/v1/geocode/" + latitude + "/" + longitude + "/forecast/daily/10day.json", "GET", null);
+		HttpHelper.enableAuth(false);
+		JsonNode d10 = response2.get("forecasts");
+		try{
+			DateFormat dates = new SimpleDateFormat("yyyy-MM-dd");
+			Date future = dates.parse(date);
+			for (JsonNode day : d10) {
+				String[] days = day.path("fcst_valid_local").asText().split("T");
+				Date dayDate = dates.parse(days[0]);
+        		if(future.equals(dayDate)){
+        			String weath = day.path("day").path("phrase_22char").asText();
+        			int temperture = day.path("day").path("temp").asInt();
+        			String narrative = day.path("day").path("narrative").asText();
+        			Weather weather = new Weather(date, city, weath, temperture, narrative);
+					return weather;
+        		}
+    		}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static Collection<Booking> getAllBookings() {

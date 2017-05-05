@@ -12,6 +12,8 @@ import javax.ws.rs.core.Response.Status;
 import microservices.api.sample.model.Airline;
 import microservices.api.sample.model.Booking;
 import microservices.api.sample.model.Flight;
+import microservices.api.sample.model.Airport;
+import microservices.api.sample.model.Weather;
 
 public class Controller {
 
@@ -27,15 +29,22 @@ public class Controller {
 	   //Flights
 	   for (int i = 0; i < 5; i++) {
 		   flights.add(new Flight(getRandomAirline(), 
-				   				  date + getRandomTime(),
+				   				  date + " " + getRandomTime(),
 				   				  "AC" + getRandomNumber(200,10),
 				   				  "on schedule",
 				   				  airportFrom,
 				   				  airportTo,
 				   				  getRandomPrice())); 
 	   }
+
+	   //Weather
+	   Weather weather = DatabaseAccess.getLocWeather(date,airportTo);
+	   if (weather == null){
+	   	   weather = new Weather();
+	   } 
+	   Airport airport = new Airport(flights,weather);
 	   
-	   return Response.ok().entity(flights).build();
+	   return Response.ok().entity(airport).build();
    }
    
 	public static Response getBookings(){

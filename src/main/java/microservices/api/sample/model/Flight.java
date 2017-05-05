@@ -108,6 +108,5 @@ public class Flight {
 	public void setNumber(String number) {
 		this.number = number;
 	}
-	
-	
+
 }

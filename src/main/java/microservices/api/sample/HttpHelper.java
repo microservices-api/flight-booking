@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivilegedAction;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Base64;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -25,8 +26,21 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HttpHelper {
+
+    private static String USERNAME;
+    private static String PASSWORD;
+    private static Boolean AUTH = false;
 	
     private static SSLContext defaultSSLContext;
+
+    public static void setAuth(String username, String password){
+        USERNAME = username;
+        PASSWORD = password;
+    }
+
+    public static void enableAuth(Boolean enable){
+        AUTH = enable;
+    }
 
     public static JsonNode connect(String url, String method, String payload) {
     	System.out.println("Calling url " + url);
@@ -39,6 +53,14 @@ public class HttpHelper {
 				e1.printStackTrace();
 				throw new IOException (e1);
 			}
+
+            if(AUTH){
+                String userPassword = USERNAME + ":" + PASSWORD;
+                byte[] userpassword = userPassword.getBytes("UTF-8");
+                String encoding = Base64.getEncoder().encodeToString(userpassword);
+                connection.setRequestProperty("Authorization", "Basic " + encoding);
+            }
+
             connection.setRequestMethod(method);
             connection.setDoInput(true);
             connection.setDoOutput(method.equals("POST") || method.equals("PUT"));
