@@ -24,7 +24,7 @@ import javax.ws.rs.core.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import microservices.api.sample.Controller;
-import microservices.api.sample.model.Flight;
+import microservices.api.sample.model.Airport;
 
 @Path("/availability")
 @Api("Airline Booking API")
@@ -32,7 +32,7 @@ import microservices.api.sample.model.Flight;
 	
 	@GET
 	@ApiOperation(value="Retrieve all available flights", 
-		responseContainer="array", response=Flight.class)
+				  response=Airport.class)
 	@Produces("application/json")
 	public Response getFlights(@QueryParam("date") String date,
 			@QueryParam("airportFrom") String airportFrom,

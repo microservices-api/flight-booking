@@ -17,8 +17,8 @@
 package microservices.api.sample.model;
 
 
-import java.util.ArrayList;
 import java.util.List;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class Airport {

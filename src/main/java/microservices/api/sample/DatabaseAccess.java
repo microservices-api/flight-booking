@@ -26,8 +26,8 @@ public class DatabaseAccess {
 	}
 
 	//Please add your Weather API's USERNAME and PASSWORD here.
-	private static String USERNAME = "username";
-	private static String PASSWORD = "password";
+	private static String WEATHER_API_USERNAME;
+	private static String WEATHER_API_PASSWORD;
 
 
 	private static String DATABASE_CORE_ADDRESS;
@@ -41,10 +41,14 @@ public class DatabaseAccess {
 		Properties props = new Properties();
 		try {
 			props.load(DatabaseAccess.class.getClassLoader().getResourceAsStream("config.properties"));
-			DATABASE_CORE_ADDRESS = "http://couchdb:5984/";
+			DATABASE_CORE_ADDRESS = props.getProperty("database","http://couchdb:5984/");
+			System.out.println("loaded config. Database: " + DATABASE_CORE_ADDRESS);
 			AIRLINES_DATABASE = DATABASE_CORE_ADDRESS + "airlines";
 			BOOKINGS_DATABASE = DATABASE_CORE_ADDRESS + "bookings";
-			System.out.println("loaded config. Database: " + DATABASE_CORE_ADDRESS);
+			
+			WEATHER_API_USERNAME = props.getProperty("weather_user");
+			WEATHER_API_PASSWORD = props.getProperty("weather_password");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,7 +78,7 @@ public class DatabaseAccess {
 	}
 
 	public static Weather getLocWeather(String date, String airportTo) {
-		HttpHelper.setAuth(USERNAME,PASSWORD);
+		HttpHelper.setAuth(WEATHER_API_USERNAME,WEATHER_API_PASSWORD);
 		HttpHelper.enableAuth(true);
 		JsonNode response = HttpHelper.connect("https://twcservice.mybluemix.net/api/weather/v3/location/point?iataCode="+ airportTo +"&language=en-US", "GET", null);
 		if (response == null) {
